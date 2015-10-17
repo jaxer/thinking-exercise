@@ -45,8 +45,6 @@ Callback url is hardcoded to be:
 
     http://localhost:8080/callback.service/method
 
-Backend will continue POST'ing there until it will succeed (with 10 seconds delay between tries)
-
 ## Sample requests
 
 ###### Success
