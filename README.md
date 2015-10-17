@@ -132,3 +132,26 @@ Memory usage never exceeds 25 mb per process.
       98%    199
       99%    438
      100%    549 (longest request)
+
+## Tests
+
+To run tests:
+
+    trial src
+
+Sample result:
+
+    $ trial src
+    src.tests.test_callback_resource
+      CallbackResourceTest
+        test_no_request_id ...                                                 [OK]
+        test_success ...                                                       [OK]
+        test_unknown_request_id ...                                            [OK]
+    src.tests.test_exported_resource
+      ExportedResourceTest
+        test_success ...                                                       [OK]
+
+    -------------------------------------------------------------------------------
+    Ran 4 tests in 0.003s
+
+    PASSED (successes=4)
