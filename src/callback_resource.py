@@ -7,6 +7,8 @@ from src.decoupled_request_factory import factory
 class CallbackResource(resource.Resource):
     isLeaf = True
 
+    factory = factory
+
     def render_POST(self, request):
         _id = request.args.get('request_id')
 
@@ -17,7 +19,7 @@ class CallbackResource(resource.Resource):
         else:
             _id = _id[0]
 
-        decoupled_request = factory.get_by_id(_id)
+        decoupled_request = self.factory.get_by_id(_id)
 
         if not decoupled_request:
             log.err('callback received for unknown request_id: %s' % _id)
