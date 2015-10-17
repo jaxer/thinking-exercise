@@ -1,14 +1,15 @@
 from datetime import datetime
 import json
 
+import treq
+
 from twisted.internet import reactor
 from twisted.internet.task import deferLater
 from twisted.web.client import Agent
 from twisted.python import log
 from twisted.web.resource import Resource
-from src.config import SERVICE_CALLBACK_URL
 
-from src.http_request import http_request
+from src.config import SERVICE_CALLBACK_URL
 
 
 class DelayFormatError(Exception):
@@ -30,8 +31,8 @@ class BackendResource(Resource):
         })
 
     def do_callback(self, request_id):
-        d = http_request("%s?request_id=%s" % (SERVICE_CALLBACK_URL, request_id),
-                         self.compose_callback_data(request_id))
+        d = treq.post("%s?request_id=%s" % (SERVICE_CALLBACK_URL, request_id),
+                      self.compose_callback_data(request_id))
         d.addCallback(self.on_callback_success, request_id)
         d.addErrback(self.on_callback_error, request_id)
         return d
@@ -43,7 +44,7 @@ class BackendResource(Resource):
         log.msg('%s: POST failed (%s)' % (request_id, error.getErrorMessage()))
 
     @staticmethod
-    def on_callback_success(body, request_id):
+    def on_callback_success(response, request_id):
         log.msg('%s: POST successful' % request_id)
 
     def schedule_callback(self, delay, request_number):
