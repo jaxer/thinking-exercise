@@ -36,7 +36,7 @@ Stop with:
 
 Logs are in `backend.log`
 
-It will start a daemon on port 8081 in foreground and export one resource:
+It will start a daemon on port 8081 and export one resource:
 
     http://127.0.0.1:8081/backend-service/method?delay=5
 
